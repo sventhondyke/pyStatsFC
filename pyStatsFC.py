@@ -111,9 +111,5 @@ class TopScorers(StatsFC):
     def __iter__(self):
         return iter(self.items)
 
-table = Table('premier-league')
-for row in table:
-    print row
-    
-print "In tenth position are", table.position(10).team
+
     
