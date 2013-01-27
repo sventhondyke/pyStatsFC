@@ -1,13 +1,42 @@
 pyStatsFC
 =========
 
-Light-weight python wrapper around the StatsFC API. 
+Light-weight python wrapper around the StatsFC API.
 
-Follows conventions from [StatsFC API v2.0 Developer page](https://statsfc.com/developers/ "With a Title") with following exceptions:
+## Response objects
+
+Responses are iterators and each datapoint is parsed into *Structure* objects. For example:
+    
+    >>> from pyStatsFC import *
+    >>> prem_table = Table('premier-league')
+    >>> for row in prem_table:
+    ...     print row.team
+    ...
+    Manchester United
+    Manchester City
+    Chelsea
+    Tottenham Hotspur
+    Everton
+    Arsenal
+    Liverpool
+    West Bromwich Albion
+    Swansea City
+    Stoke City
+    Sunderland
+    West Ham United
+    Norwich City
+    Fulham
+    Southampton
+    Newcastle United
+    Aston Villa
+    Reading
+    Wigan Athletic
+    Queens Park Rangers
+
+The classes follow conventions from [StatsFC API v2.0 Developer page](https://statsfc.com/developers/ "With a Title") with following exceptions:
 
 *Fixtures* and *Results*
 ------------------------
-These are grouped in the **Matches** class. You pass a _type_ argument which can be 'fixtures' or 'results'.
 Date arguments are called *date_from* and *date_to* ('from' being reserved in python) and can be passed as python datetime.date objects or strings in yyyy-mm-dd form.
 
 Quick examples
@@ -16,7 +45,7 @@ Quick examples
 #### Fixtures
 
     >>> from pyStatsFC import *
-    >>> for reds in Matches('premier-league', 'fixtures', team='Liverpool'):
+    >>> for reds in Fixtures('premier-league', team='Liverpool'):
     ...     print reds
     ...
     status : u'Not started'

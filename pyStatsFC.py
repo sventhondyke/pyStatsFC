@@ -3,7 +3,7 @@ from operator import itemgetter
 import httplib2, urllib, json, time, string, copy
 from datetime import date, timedelta
 
-__KEY__ = 'free' # obviously chnage this is you have a paid API key
+__KEY__ = 'free' # obviously chnage this if you have a paid API key
 
 class Struct:
     ''' Structure object for data items. '''
@@ -21,27 +21,14 @@ class StatsFC(object):
         self.base_url = "http://api.statsfc.com/{0}/{1}.json?key={2}&{3}".format(competition, data, __KEY__, urllib.urlencode({'limit':limit}))
         self.headers = {'Content-type': 'application/json;charset=utf-8', 'Accept-Encoding': 'compress, gzip'}
         
-    def request(self, additional_params={}, maximimum_retries=10):
-        success = False
-        retries = 0
-        while not success and retries < maximimum_retries:                          
-            http = httplib2.Http()
-            request_url = self.base_url + '&' + urllib.urlencode(additional_params)
-            self.http_headers, response = http.request(request_url, headers=self.headers)
-            if self.http_headers['status'] == '403':
-                try:
-                    retry_after = self.http_headers['retry_after']
-                    time.sleep(retry_after)
-                    retries =+ 1
-                except KeyError :
-                    pass
-            elif self.http_headers['status'] == '200':
-                success = True                                        
-                self.response = json.loads(response)
-                if 'error' in self.response:
-                    raise SFCError(self.response['error'])
-            else:
-                raise SFCError(self.http_headers['status'])
+    def request(self, additional_params={}):                     
+        http = httplib2.Http()
+        request_url = self.base_url + '&' + urllib.urlencode(additional_params)
+        self.http_headers, response = http.request(request_url, headers=self.headers)        
+        self.response = json.loads(response)
+        if 'error' in self.response:
+                raise SFCError(self.response['error'])
+
             
 class Table(StatsFC):
     ''' Table object '''
@@ -64,10 +51,8 @@ class Table(StatsFC):
             return self.rows[pos-1]
         
 class Matches(StatsFC):
-    ''' Fixtures or Results object. 
-    
-    date_from & date_to need to be either datetime.date objects or 'yyyy-mm-dd' strings
-    
+    ''' Fixtures or Results object.    
+    date_from & date_to need to be either datetime.date objects or 'yyyy-mm-dd' strings    
     '''
     def __init__(self, competition, type, **kwargs):
         super(Matches, self).__init__(competition, type, limit=kwargs.get('limit',''))     
@@ -78,7 +63,15 @@ class Matches(StatsFC):
         self.items = [Struct(**data) for data in self.response]
         
     def __iter__(self):
-        return iter(self.items)      
+        return iter(self.items)
+
+class Fixtures(Matches):
+    def __init__(self,competition, **kwargs):
+        super(Fixtures, self).__init__(competition, 'fixtures', **kwargs)
+
+class Results(Matches):
+    def __init__(self,competition, **kwargs):
+        super(Results, self).__init__(competition, 'results', **kwargs)
 
 class Live(StatsFC):
     ''' Live Matches object. '''
@@ -112,4 +105,9 @@ class TopScorers(StatsFC):
         return iter(self.items)
 
 
+if __name__ == "__main__":
     
+    _from = date(2013,1,1)
+    _to = date(2013,5,30)
+    for res in Results('fa-cup', date_from=_from, date_to=_to):
+        print res
