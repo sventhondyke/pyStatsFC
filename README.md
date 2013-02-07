@@ -33,7 +33,7 @@ Responses are iterators and each datapoint is parsed into *Structure* objects. F
     Wigan Athletic
     Queens Park Rangers
 
-The classes follow conventions from [StatsFC API v2.0 Developer page](https://statsfc.com/developers/ "With a Title") with following exceptions:
+The classes follow conventions from [StatsFC API v2.0 Developer page](https://statsfc.com/developers "With a Title") with following exceptions:
 
 *Fixtures* and *Results*
 ------------------------
