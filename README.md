@@ -111,4 +111,4 @@ Quick examples
 ##### Table position method
 
     >>> print "In seventh position are", Table('premier-league').position(7).team
-    ... In tenth position are Stoke City
+    ... In seventh position are Stoke City
