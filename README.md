@@ -7,7 +7,7 @@ Light-weight python wrapper around the StatsFC API.
 
 Responses are iterators and each datapoint is parsed into *Structure* objects. For example:
     
-    >>> from pyStatsFC import *
+    >>> from pystatsfc import *
     >>> prem_table = Table('premier-league')
     >>> for row in prem_table:
     ...     print row.team
@@ -44,7 +44,7 @@ Quick examples
 
 #### Fixtures
 
-    >>> from pyStatsFC import *
+    >>> from pystatsfc import *
     >>> for reds in Fixtures('premier-league', team='Liverpool'):
     ...     print reds
     ...
@@ -110,5 +110,5 @@ Quick examples
     
 ##### Table position method
 
-    >>> print "In tenth position are", Table('premier-league').position(7).team
+    >>> print "In seventh position are", Table('premier-league').position(7).team
     ... In tenth position are Stoke City
