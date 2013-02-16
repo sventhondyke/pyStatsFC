@@ -3,10 +3,10 @@ from operator import itemgetter
 import httplib2, urllib, json, time, string, copy
 from datetime import date, timedelta
 
-__KEY__ = 'free' # obviously chnage this if you have a paid API key
+__KEY__ = 'free' # obviously change this if you have a paid API key
 
-class Struct:
-    ''' Structure object for data items. '''
+class Struct(object):
+    ''' Structure object for data items.'''
     def __init__(self, **entries): 
         self.__dict__.update(entries)
     def __repr__(self): return '%s\n------ *** ------' % str('\n'.join('%s : %s' % (k, repr(v)) for (k, v) in self.__dict__.iteritems()))
@@ -104,9 +104,8 @@ class TopScorers(StatsFC):
     def __iter__(self):
         return iter(self.items)
 
-
 if __name__ == "__main__":
-    
+    print "some tests..."
     _from = date(2013,1,1)
     _to = date(2013,5,30)
     for res in Results('fa-cup', date_from=_from, date_to=_to):

@@ -108,7 +108,7 @@ Quick examples
     .
     ...
     
-##### Table position method
+##### Table position method 
 
     >>> print "In seventh position are", Table('premier-league').position(7).team
     ... In seventh position are Stoke City
